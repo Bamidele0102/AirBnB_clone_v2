@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """
-With Facric , creates a tgz archive
+With Fabric , creates a tgz archive
 from web_static content folder
 """
 
 from fabric.api import env, local, put, run
 from datetime import datetime
 from os.path import exists, isdir
-env.hosts = ['34.232.69.133', '54.209.193.30']
+env.hosts = ['54.160.73.250', '52.90.22.193']
 env.user = 'ubuntu'
 env.key_filename = '~/.ssh/school'
 
