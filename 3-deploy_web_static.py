@@ -1,16 +1,14 @@
 #!/usr/bin/python3
 """
-Fabric script based on the file 2-do_deploy_web_static.py that creates and
-distributes an archive to the web servers
-
-execute: fab -f 3-deploy_web_static.py deploy -i ~/.ssh/id_rsa -u ubuntu
+    Creates and distributes an archive to the web servers
 """
 
 from fabric.api import env, local, put, run
 from datetime import datetime
 from os.path import exists, isdir
-
 env.hosts = ['54.160.73.250', '52.90.22.193']
+env.user = 'ubuntu'
+env.identity = '~/.ssh/id_rsa'
 
 
 def do_pack():
@@ -22,7 +20,7 @@ def do_pack():
         file_name = "versions/web_static_{}.tgz".format(date)
         local("tar -cvzf {} web_static".format(file_name))
         return file_name
-    except Exception:
+    except FileNotFoundError:
         return None
 
 
@@ -42,9 +40,8 @@ def do_deploy(archive_path):
         run('rm -rf {}{}/web_static'.format(path, no_ext))
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
-        run('mv {}{}/0-index.html {}{}/'.format(path, no_ext, path, no_ext))
         return True
-    except Exception:
+    except FileNotFoundError:
         return False
 
 
@@ -53,4 +50,15 @@ def deploy():
     archive_path = do_pack()
     if archive_path is None:
         return False
-    return do_deploy(archive_path)
+
+    # Deploy locally
+    local_archive_path = '/tmp/' + archive_path.split('/')[-1]
+    local('mv {} {}'.format(archive_path, local_archive_path))
+
+    # Deploy remotely
+    remote_deploy_result = do_deploy(local_archive_path)
+
+    # Clean up locally
+    local('rm {}'.format(local_archive_path))
+
+    return remote_deploy_result
