@@ -83,8 +83,6 @@ file { '/etc/nginx/sites-available/default':
   content => $nginx_conf
 } ->
 
-service { 'nginx':
-  ensure    => 'running',
-  enable    => true,
-  subscribe => File['/etc/nginx/sites-available/default'],
+exec { 'nginx restart':
+  path => '/etc/init.d/'
 }
