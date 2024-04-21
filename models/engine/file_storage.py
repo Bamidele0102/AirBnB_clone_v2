@@ -26,17 +26,15 @@ class FileStorage:
         Return:
             returns a dictionary of __object
         """
-        dic = {}
-        if cls:
-            dictionary = self.__objects
-            for key in dictionary:
-                partition = key.replace('.', ' ')
-                partition = shlex.split(partition)
-                if partition[0] == cls.__name__:
-                    dic[key] = self.__objects[key]
-            return dic
-        else:
-            return self.__objects
+        if cls is not None:
+            if isinstance(cls, str):
+                cls = eval(cls)
+            cls_dict = {}
+            for k, v in self.__objects.items():
+                if isinstance(v, cls):
+                    cls_dict[k] = v
+            return cls_dict
+        return self.__objects
 
     def new(self, obj):
         """sets __object to given obj
@@ -68,11 +66,10 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """ delete an existing element
-        """
-        if obj:
+        """Method that deletes obj from __objects"""
+        if obj is not None:
             key = "{}.{}".format(type(obj).__name__, obj.id)
-            del self.__objects[key]
+            self.__objects.pop(key, None)
 
     def close(self):
         """ calls reload()
