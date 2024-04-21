@@ -10,22 +10,21 @@ routes: /c/<text>: display “C ” followed by the value
 
 from flask import Flask
 app = Flask(__name__)
-app.url_map.strict_slashes = False
 
 
-@app.route('/')
+@app.route('/', strict_slashes = False)
 def index():
     """Function that displays "Hello HBNB!"""
     return 'Hello HBNB!'
 
 
-@app.route('/hbnb')
+@app.route('/hbnb', strict_slashes = False)
 def hbnb():
     """Function that displays "HBNB!"""
     return 'HBNB!'
 
 
-@app.route('/c<text>')
+@app.route('/c<text>', strict_slashes = False)
 def c_text(text):
     """Function that displays custom text given by user"""
     return 'C ' + text.replace('_', ' ')
