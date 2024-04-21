@@ -1,28 +1,35 @@
 #!/usr/bin/python3
 """
-start Flask application
+Start a Flask web app that listen on 0.0.0.0, port 5000
+routes: /: display "Hello HBNB!"
+routes: /hbnb: display "HBNB!"
+routes: /c/<text>: display “C ” followed by the value
+                    of the text variable (replace underscore _
+                    symbols with a space )
 """
 
 from flask import Flask
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 
 
-@app.route('/', strict_slashes=False)
-def index():
-    """returns Hello HBNB!"""
-    return 'Hello HBNB!'
+@app.route('/')
+def hello_hbnb():
+    """Function that displays "Hello HBNB!"""
+    return "Hello HBNB!"
 
 
-@app.route('/hbnb', strict_slashes=False)
+@app.route('/hbnb')
 def hbnb():
-    """returns HBNB"""
-    return 'HBNB'
+    """Function that displays "HBNB!"""
+    return "HBNB!"
 
 
-@app.route('/c/<text>', strict_slashes=False)
-def cisfun(text):
-    """display “C ” followed by the value of the text variable"""
+@app.route('/c<text>')
+def c_text(text):
+    """Function that displays custom text given by user"""
     return 'C ' + text.replace('_', ' ')
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
