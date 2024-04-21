@@ -8,7 +8,7 @@ routes: /c/<text>: display “C ” followed by the value
                     symbols with a space )
 """
 
-from flask import Flask
+from flask import Flask, escape
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
@@ -28,7 +28,7 @@ def hbnb():
 @app.route('/c<text>')
 def c_text(text):
     """Function that displays custom text given by user"""
-    return "C {}".format(text.replace('_', ' '))
+    return 'C {}'.format(escape(text.replace('_', ' ')))
 
 
 if __name__ == "__main__":
