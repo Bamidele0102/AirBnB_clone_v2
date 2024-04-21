@@ -14,7 +14,7 @@ app.url_map.strict_slashes = False
 
 
 @app.route('/')
-def hello_hbnb():
+def index():
     """Function that displays "Hello HBNB!"""
     return 'Hello HBNB!'
 
@@ -31,5 +31,5 @@ def c_text(text):
     return 'C ' + text.replace('_', ' ')
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
