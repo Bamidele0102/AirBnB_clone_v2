@@ -18,8 +18,8 @@ def hello_hbnb():
 
 @app.route('/hbnb')
 def hbnb():
-    """Function that displays "HBNB!"""
-    return "HBNB!"
+    """Function that displays "HBNB"""
+    return "HBNB"
 
 
 if __name__ == "__main__":
