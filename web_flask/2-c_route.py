@@ -28,7 +28,7 @@ def hbnb():
 @app.route('/c<text>')
 def c_text(text):
     """Function that displays custom text given by user"""
-    return "C".format(text.replace('_', ' '))
+    return "C {}".format(text.replace('_', ' '))
 
 
 if __name__ == "__main__":
