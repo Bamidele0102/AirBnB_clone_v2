@@ -8,7 +8,7 @@ routes: /c/<text>: display “C ” followed by the value
                     symbols with a space )
 routes: /python: display "Python is cool"
 routes: /number/<n>
-routes: /number_template/<n>: display a HTML page only if n is an intege
+routes: /number_template/<n>: display a HTML page only if n is an integer
 """
 
 from flask import Flask, render_template
