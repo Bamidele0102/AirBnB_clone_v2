@@ -9,9 +9,9 @@ from flask import Flask, render_template
 from models import storage
 from models import *
 
-
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
 
 @app.route("/cities_by_states")
 def cities_by_states():
@@ -30,4 +30,4 @@ def teardown(exc):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0" port=5000)
